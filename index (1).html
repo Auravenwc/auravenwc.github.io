@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101b3c">
+<title>AURAVEN | Private Team</title>
+<style>
+:root{--navy:#101b3c;--blue:#3157d5;--ink:#17213b;--muted:#71809d;--line:#e7ebf3;--bg:#f4f6fb;--white:#fff;--gold:#e6ad38;--green:#168568}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Noto Sans Bengali",sans-serif;color:var(--ink);padding-bottom:78px}
+header{background:linear-gradient(130deg,#101b3c,#263f86);color:white;padding:17px 18px 22px;position:sticky;top:0;z-index:5}
+.top{max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;letter-spacing:2px;font-size:23px}.tag{font-size:10px;letter-spacing:1.4px;color:#c6d4ff}.status{border:1px solid #6e83c4;border-radius:30px;padding:7px 10px;font-size:10px;color:#e6edff}
+main{max-width:900px;margin:0 auto;padding:18px 14px 30px}.page{display:none}.page.active{display:block}.hero{padding:20px 4px 12px}.hero h1{font-size:clamp(24px,5vw,34px);margin:0 0 5px}.hero p{color:var(--muted);margin:0;font-size:14px}
+.card{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;margin:12px 0;box-shadow:0 5px 18px #17213b08}.card h2{margin:0 0 5px;font-size:18px}.sub,.muted{color:var(--muted);font-size:13px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#f7f8fd;border-radius:13px;padding:13px}.stat b{font-size:22px;display:block}.stat span{font-size:12px;color:var(--muted)}
+button{border:0;border-radius:11px;padding:11px 14px;background:var(--blue);color:white;font-weight:700;cursor:pointer}button.secondary{background:#edf1ff;color:#2947ae}button.danger{background:#fff0f0;color:#b32d36}button:disabled{opacity:.5;cursor:not-allowed}
+input,textarea,select{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;background:white;color:var(--ink);outline-color:#9eafff}textarea{min-height:90px;resize:vertical}.form{display:grid;gap:9px;margin-top:12px}.post{border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:11px;background:white}.posthead{display:flex;justify-content:space-between;gap:8px;align-items:center}.avatar{width:34px;height:34px;border-radius:50%;background:#e9edff;color:#2947ae;display:grid;place-items:center;font-weight:800}.post img{width:100%;max-height:330px;object-fit:contain;border-radius:11px;margin-top:10px;background:#f4f6fb}.pill{font-size:11px;border-radius:30px;padding:5px 9px;background:#edf1ff;color:#2947ae}.note{font-size:12px;color:#7c879c;line-height:1.5;margin-top:10px}.empty{text-align:center;color:var(--muted);padding:25px 10px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:10;padding:7px 4px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -5px 20px #17213b0c}.nav{max-width:900px;width:100%;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}.nav button{background:transparent;color:#73809a;padding:7px 2px;border-radius:10px;font-size:10px;font-weight:600}.nav button span{display:block;font-size:19px;margin-bottom:2px}.nav button.active{background:#edf1ff;color:#2947ae}
+.wheel-wrap{display:flex;justify-content:center;position:relative;padding:12px}.pointer{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:27px solid var(--gold)}canvas{width:min(100%,330px);height:auto}.winner{font-size:19px;font-weight:800;color:#2444b4;min-height:28px;margin:10px 0}.member{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);gap:8px}.member:last-child{border:0}.member small{display:block;color:var(--muted)}.adminbox{border:1px dashed #9aa9d2;background:#f8f9ff}.hidden{display:none!important}
+.intro{position:fixed;inset:0;z-index:1000;background:radial-gradient(circle at 50% 35%,#2b478e 0,#182b61 42%,#101b3c 100%);color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:opacity .65s ease,visibility .65s ease}
+.intro.hide{opacity:0;visibility:hidden;pointer-events:none}.intro-inner{text-align:center;animation:introRise 1s ease both}.intro-mark{width:62px;height:62px;border:1px solid #8297d4;border-radius:18px;display:grid;place-items:center;margin:0 auto 18px;font-size:34px;font-weight:900;color:#f4bd4f;box-shadow:0 0 35px #8aa5ff30}.intro-title{font-size:clamp(36px,9vw,54px);font-weight:900;letter-spacing:5px}.intro-credit{font-size:10px;letter-spacing:2px;color:#c6d4ff;margin-top:9px}.intro-line{height:2px;width:0;background:#e6ad38;margin:24px auto 0;animation:introLine 1.5s .25s ease forwards}.intro-skip{position:absolute;bottom:35px;color:#b9c7ed;font-size:11px;letter-spacing:1px}
+@keyframes introRise{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes introLine{to{width:125px}}
+.bottom{z-index:30;pointer-events:auto}.nav button{position:relative;z-index:31;pointer-events:auto;touch-action:manipulation}
+@media(min-width:700px){main{padding-top:25px}.homecards{grid-template-columns:repeat(3,1fr)}}
+
+.gate{position:fixed;inset:0;z-index:900;background:linear-gradient(130deg,#101b3c,#263f86);display:flex;align-items:center;justify-content:center;padding:18px}.gate .card{width:100%;max-width:380px}.gate h2{font-size:22px}.err{color:#b32d36;font-size:13px;min-height:18px}.link{background:none;color:#2947ae;padding:6px;font-weight:600}
+</style>
+</head>
+<body>
+<div id="intro" class="intro" role="button" tabindex="0" aria-label="AURAVEN intro; tap to continue">
+  <div class="intro-inner">
+    <div class="intro-mark">A</div>
+    <div class="intro-title">AURAVEN</div>
+    <div class="intro-credit">CREATED BY AURAVEN WEBLAB</div>
+    <div class="intro-line"></div>
+  </div>
+  <div class="intro-skip">Tap to continue</div>
+</div>
+<div id="gate" class="gate"><div class="card">
+<div id="authBox"><h2 id="authTitle">AURAVEN Login</h2><div class="sub">শুধু অনুমোদিত সদস্যরা ভেতরে ঢুকতে পারবে।</div>
+<div class="form"><input id="aName" class="hidden" maxlength="28" placeholder="আপনার নাম"><input id="aEmail" type="email" placeholder="Email"><input id="aPass" type="password" placeholder="Password (কমপক্ষে ৬ অক্ষর)"><div id="aErr" class="err"></div><button id="aGo">Login</button><button id="aSwitch" class="link" type="button">নতুন? Join request পাঠান</button></div></div>
+<div id="pendBox" class="hidden"><h2>অনুমোদনের অপেক্ষায়</h2><p class="sub">আপনার অনুরোধ Owner-এর কাছে গেছে। অনুমোদন পেলে এই পেজ নিজে থেকেই খুলে যাবে।</p><button id="pendOut" class="secondary">Log out</button></div>
+</div></div>
+<header><div class="top"><div><div class="brand">AURAVEN</div><div class="tag">CREATED BY AURAVEN WEBLAB</div></div><div class="status" id="roleBadge">AURAVEN TEAM</div></div></header>
+<main>
+<section class="page active" id="home">
+ <div class="hero"><h1>Welcome to Auraven</h1><p>Your team. Your space.</p></div>
+ <div class="grid homecards">
+  <div class="stat"><b id="memberCount">3</b><span>Team members</span></div>
+  <div class="stat"><b id="postCount">0</b><span>Desk posts</span></div>
+  <div class="stat"><b id="noticeCount">0</b><span>Notices</span></div>
+ </div>
+ <div class="card"><h2>Request to join AURAVEN</h2><div class="sub">নতুন কেউ সদস্য হতে চাইলে আগে অনুরোধ পাঠাবে। Owner অনুমোদন না দেওয়া পর্যন্ত সদস্য হবে না।</div><div class="form"><input id="requestName" maxlength="28" placeholder="আপনার নাম"><button id="requestJoin" class="secondary">Request access</button></div><p class="note">এটি শুধু ডেমো। আসল অনুরোধ সব ডিভাইসে দেখতে Firebase লাগবে।</p></div>
+ <div class="card"><div class="row"><div><h2>Team Space</h2><div class="sub">এক জায়গায় টিমের পোস্ট, নোটিশ ও আপডেট।</div></div><span class="pill">TEAM SPACE</span></div><p class="note">এটি AURAVEN-এর টিম স্পেস।</p></div>
+ <div class="card"><h2>Latest notice</h2><div id="homeNotice" class="muted">এখনো কোনো নোটিশ নেই।</div></div>
+</section>
+
+<section class="page" id="search">
+ <div class="hero"><h1>Search</h1><p>সদস্য ও পোস্ট খুঁজুন।</p></div>
+ <div class="card form"><input id="searchInput" placeholder="নাম, Member ID বা পোস্ট খুঁজুন..."><div id="searchResults" class="muted">খোঁজার জন্য লিখুন।</div></div>
+</section>
+
+<section class="page" id="desk">
+ <div class="hero"><h1>Team Desk</h1><p>সব সদস্য এখানে লেখা ও ছবি শেয়ার করতে পারবে।</p></div>
+ <div class="card"><h2>Create a post</h2><div class="form"><textarea id="postText" placeholder="আপনার টিমের সঙ্গে কিছু শেয়ার করুন..."></textarea><input id="postImage" type="file" accept="image/*"><button id="publishPost">Post to Desk</button></div><p class="note">এখানে ফোন নম্বর চাওয়া হয় না। এটি লোকাল ডেমো; সব সদস্যের ডিভাইসে পোস্ট দেখাতে Firebase লাগবে।</p></div>
+ <div id="feed"></div>
+</section>
+
+<section class="page" id="notice">
+ <div class="hero"><h1>Notice Board</h1><p>Owner-এর প্রকাশিত গুরুত্বপূর্ণ নোটিশ।</p></div>
+ <div class="card adminbox" id="noticeComposer"><h2>Owner: Publish a notice</h2><div class="form"><input id="noticeTitle" placeholder="Notice title"><textarea id="noticeText" placeholder="নোটিশ লিখুন..."></textarea><button id="publishNotice">Publish Notice</button></div></div>
+ <div id="notices"></div>
+</section>
+
+<section class="page" id="lottery">
+ <div class="hero"><h1>Gift Lottery</h1><p>শুধু Owner ড্র চালাতে পারবেন।</p></div>
+ <div class="card"><div class="wheel-wrap"><div class="pointer"></div><canvas id="wheel" width="500" height="500"></canvas></div><div class="winner" id="winner">No winner yet</div><button id="spin" style="width:100%">Owner: Spin the wheel</button><p class="note">ডেমোতে বিজয়ী দেখাবে। ফোন নম্বর না নিয়ে SMS পাঠানো সম্ভব নয়; SMS সুবিধা চাইলে সদস্যের সম্মতি নিয়ে আলাদা নম্বরভিত্তিক ব্যবস্থা লাগবে।</p></div>
+</section>
+
+<section class="page" id="account">
+ <div class="hero"><h1>My Account</h1><p>আপনার প্রোফাইল ও Owner-এর বার্তা।</p></div>
+ <div class="card"><div class="row"><div><h2 id="accountName">Owner</h2><div class="muted" id="accountId">AV-001</div></div><span class="pill" id="accountRole">OWNER DEMO</span></div><p class="note">এটি Owner preview। প্রকৃত Owner পরিচয় Firebase Authentication ও server-side Security Rules দিয়ে যাচাই করতে হবে।</p></div>
+ <div class="card" id="ownerTools"><h2>Owner Control</h2><div class="sub">সদস্য যোগ/বাদ, ব্যক্তিগত বার্তা ও অনুমতি নিয়ন্ত্রণের ডেমো।</div>
+  <h3 style="margin:16px 0 0">Join requests (অনুমোদনের অপেক্ষায়)</h3><div id="requestList" style="margin-top:8px"></div>
+  <h3 style="margin:16px 0 0">Approved members</h3><div id="memberList" style="margin-top:8px"></div>
+  <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+  <h3 style="margin:0">Send amount / message</h3><div class="form"><select id="messageTo"></select><input id="amount" type="number" min="0" placeholder="Amount (TK)"><textarea id="privateMessage" placeholder="আপনার মেসেজ..."></textarea><button id="sendMessage">Send in account</button></div>
+  <h3 style="margin:18px 0 0">Owner message history</h3><div id="messageHistory" class="muted">এখনো কোনো মেসেজ নেই।</div>
+ </div>
+ <div class="card"><h2>My messages</h2><div id="myMessages" class="muted">এখনো কোনো বার্তা নেই।</div></div>
+</section>
+</main>
+<nav class="bottom"><div class="nav">
+ <button type="button" data-page="search"><span>⌕</span>Search</button><button type="button" class="active" data-page="home"><span>⌂</span>Home</button><button type="button" data-page="desk"><span>▤</span>Desk</button><button type="button" data-page="notice"><span>♧</span>Notice</button><button type="button" data-page="lottery"><span>◉</span>Lottery</button><button type="button" data-page="account"><span>☻</span>Account</button>
+</div></nav>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,deleteDoc,updateDoc,addDoc,collection,query,where,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyCf7J1VrFJoPqF5Cm1TmdLveSeWIswO414",authDomain:"auraven-be8d1.firebaseapp.com",projectId:"auraven-be8d1",storageBucket:"auraven-be8d1.firebasestorage.app",messagingSenderId:"103977670850",appId:"1:103977670850:web:30db07851d075475aa435b"};
+const OWNER_UID="5t2KJzP6vvRbnq7JZzjLATkj2Dy2"; // firestore.rules এর OWNER_UID এর সাথে একই
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=id=>document.getElementById(id),colors=["#3157d5","#e0a72d","#243b79","#4e75dc","#8b6bd6","#2f9b83","#d66c79","#61728f"];
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const tm=t=>t&&t.toDate?t.toDate().toLocaleString("bn-BD"):"";const tid=u=>"AV-"+u.slice(0,5).toUpperCase();
+function nav(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page))}
+document.querySelector(".nav").addEventListener("click",e=>{const b=e.target.closest("button[data-page]");if(b){e.preventDefault();nav(b.dataset.page)}});
+let me=null,isOwner=false,everyone=[],members=[],requests=[],posts=[],notices=[],messages=[],unsubs=[],angle=0,spinning=false,signup=false,pendingName="";
+// ---------- auth ----------
+$("aSwitch").onclick=()=>{signup=!signup;$("aName").classList.toggle("hidden",!signup);$("authTitle").textContent=signup?"Join AURAVEN":"AURAVEN Login";$("aGo").textContent=signup?"Send join request":"Login";$("aSwitch").textContent=signup?"আগে থেকেই সদস্য? Login":"নতুন? Join request পাঠান";$("aErr").textContent=""};
+$("aGo").onclick=async()=>{const email=$("aEmail").value.trim(),pass=$("aPass").value;$("aErr").textContent="";
+ try{if(signup){pendingName=$("aName").value.trim();if(!pendingName)return $("aErr").textContent="নাম লিখুন।";await createUserWithEmailAndPassword(auth,email,pass)}else await signInWithEmailAndPassword(auth,email,pass)}
+ catch(e){$("aErr").textContent=({"auth/invalid-credential":"Email বা password ভুল।","auth/email-already-in-use":"এই email আগেই ব্যবহার হয়েছে।","auth/weak-password":"Password কমপক্ষে ৬ অক্ষর দিন।","auth/invalid-email":"Email ঠিক নয়।"})[e.code]||e.message}};
+const out=()=>signOut(auth);$("logout").onclick=out;$("pendOut").onclick=out;
+function stop(){unsubs.forEach(u=>u());unsubs=[];everyone=[];members=[];requests=[];posts=[];notices=[];messages=[]}
+onAuthStateChanged(auth,async user=>{stop();me=null;
+ if(!user){$("gate").classList.remove("hidden");$("authBox").classList.remove("hidden");$("pendBox").classList.add("hidden");return}
+ const ref=doc(db,"users",user.uid);
+ try{let snap=await getDoc(ref);
+  if(!snap.exists()){await setDoc(ref,{name:user.uid===OWNER_UID?"Owner":(pendingName||user.email.split("@")[0]),email:user.email,role:user.uid===OWNER_UID?"owner":"pending",createdAt:serverTimestamp()})}
+  else if(user.uid===OWNER_UID&&snap.data().role!=="owner")await updateDoc(ref,{role:"owner"});
+ }catch(e){alert("Setup error: "+e.message);return}
+ unsubs.push(onSnapshot(ref,s=>{if(!s.exists()){out();return}
+  me={uid:user.uid,...s.data()};
+  if(me.role==="pending"){$("gate").classList.remove("hidden");$("authBox").classList.add("hidden");$("pendBox").classList.remove("hidden");return}
+  if(!me._on){startApp()}
+ },e=>console.log(e)));
+});
+function startApp(){if(me._on)return;me._on=true;isOwner=me.uid===OWNER_UID&&me.role==="owner";
+ $("gate").classList.add("hidden");$("roleBadge").textContent=isOwner?"OWNER":"MEMBER";$("accountName").textContent=me.name;$("accountId").textContent=tid(me.uid);$("accountRole").textContent=isOwner?"OWNER":"MEMBER";
+ ["noticeComposer","ownerTools","spin"].forEach(i=>$(i).classList.toggle("hidden",!isOwner));
+ const U=collection(db,"users");
+ unsubs.push(onSnapshot(isOwner?U:query(U,where("role","in",["member","owner"])),s=>{everyone=s.docs.map(d=>({uid:d.id,...d.data()}));members=everyone.filter(u=>u.role==="member");requests=everyone.filter(u=>u.role==="pending");render()},e=>console.log(e)));
+ const byTime=(a,b)=>(b.createdAt?.seconds||9e12)-(a.createdAt?.seconds||9e12);
+ unsubs.push(onSnapshot(collection(db,"posts"),s=>{posts=s.docs.map(d=>({id:d.id,...d.data()})).sort(byTime);render()},e=>console.log(e)));
+ unsubs.push(onSnapshot(collection(db,"notices"),s=>{notices=s.docs.map(d=>({id:d.id,...d.data()})).sort(byTime);render()},e=>console.log(e)));
+ const M=collection(db,"messages");
+ unsubs.push(onSnapshot(isOwner?M:query(M,where("to","==",me.uid)),s=>{messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(byTime);render()},e=>console.log(e)));
+}
+// ---------- render ----------
+function render(){if(!me)return;
+ $("memberCount").textContent=everyone.filter(u=>u.role!=="pending").length;$("postCount").textContent=posts.length;$("noticeCount").textContent=notices.length;
+ const n=notices[0];$("homeNotice").textContent=n?n.title+" — "+n.body:"এখনো কোনো নোটিশ নেই।";
+ $("feed").innerHTML=posts.length?posts.map(p=>`<article class="post"><div class="posthead"><div class="row"><div class="avatar">${safe((p.name||"?").slice(0,1))}</div><div><b>${safe(p.name)}</b><small class="muted">${tid(p.uid)} · ${tm(p.createdAt)}</small></div></div>${isOwner||p.uid===me.uid?`<button class="danger" onclick="delPost('${p.id}')">Delete</button>`:""}</div><p>${safe(p.text).replace(/\n/g,"<br>")}</p>${p.image?`<img src="${p.image}" alt="Post image">`:""}</article>`).join(""):'<div class="empty">এখনো কোনো পোস্ট নেই।</div>';
+ $("notices").innerHTML=notices.length?notices.map(n=>`<article class="post"><span class="pill">OWNER NOTICE</span><h3>${safe(n.title)}</h3><p>${safe(n.body).replace(/\n/g,"<br>")}</p><small class="muted">${tm(n.createdAt)}</small></article>`).join(""):'<div class="empty">এখনো কোনো নোটিশ নেই।</div>';
+ $("myMessages").innerHTML=messages.filter(m=>m.to===me.uid).map(m=>`<div class="post"><b>${m.amount?"৳"+safe(m.amount)+" · ":""}Owner message</b><p>${safe(m.text)}</p><small class="muted">${tm(m.createdAt)}</small></div>`).join("")||"এখনো কোনো বার্তা নেই।";
+ if(isOwner){
+  $("requestList").innerHTML=requests.length?requests.map(r=>`<div class="member"><div><b>${safe(r.name)}</b><small>${safe(r.email)}</small></div><div class="row"><button onclick="approve('${r.uid}')">Approve</button><button class="danger" onclick="rejectU('${r.uid}')">Reject</button></div></div>`).join(""):'<div class="muted">কোনো নতুন অনুরোধ নেই।</div>';
+  $("memberList").innerHTML=everyone.filter(u=>u.role!=="pending").map(m=>`<div class="member"><div><b>${safe(m.name)}</b><small>${tid(m.uid)}</small></div>${m.role!=="owner"?`<button class="danger" onclick="rejectU('${m.uid}')">Remove</button>`:'<span class="pill">OWNER</span>'}</div>`).join("");
+  $("messageTo").innerHTML=members.map(m=>`<option value="${m.uid}">${safe(m.name)} (${tid(m.uid)})</option>`).join("");
+  $("messageHistory").innerHTML=messages.length?messages.map(m=>`<div class="post"><b>To ${safe(m.name)}</b><p>${m.amount?`Amount: ৳${safe(m.amount)}<br>`:""}${safe(m.text)}</p><small class="muted">${tm(m.createdAt)}</small></div>`).join(""):"এখনো কোনো মেসেজ নেই।";
+ }
+ const q=$("searchInput").value.toLowerCase();if(q){const f=[...everyone.filter(u=>u.role!=="pending"&&(u.name+" "+tid(u.uid)).toLowerCase().includes(q)).map(u=>u.name+" · "+tid(u.uid)),...posts.filter(p=>(p.text||"").toLowerCase().includes(q)).map(p=>"Post: "+p.text.slice(0,70))];$("searchResults").innerHTML=f.length?f.map(x=>`<div class="member">${safe(x)}</div>`).join(""):"কিছু পাওয়া যায়নি।"}
+ draw();
+}
+window.approve=uid=>updateDoc(doc(db,"users",uid),{role:"member"}).catch(e=>alert(e.message));
+window.rejectU=uid=>{if(confirm("নিশ্চিত?"))deleteDoc(doc(db,"users",uid)).catch(e=>alert(e.message))};
+window.delPost=id=>{if(confirm("পোস্ট মুছবেন?"))deleteDoc(doc(db,"posts",id)).catch(e=>alert(e.message))};
+$("publishPost").onclick=()=>{const text=$("postText").value.trim(),file=$("postImage").files[0];if(!text&&!file)return alert("লেখা বা ছবি দিন।");
+ const add=image=>addDoc(collection(db,"posts"),{uid:me.uid,name:me.name,text,image,createdAt:serverTimestamp()}).then(()=>{$("postText").value="";$("postImage").value=""}).catch(e=>alert(e.message));
+ if(file){if(file.size>700000)return alert("ছবির সাইজ 700 KB-এর মধ্যে রাখুন।");const r=new FileReader();r.onload=()=>add(r.result);r.readAsDataURL(file)}else add("")};
+$("publishNotice").onclick=()=>{const title=$("noticeTitle").value.trim(),body=$("noticeText").value.trim();if(!title||!body)return alert("শিরোনাম ও নোটিশ লিখুন।");addDoc(collection(db,"notices"),{title,body,createdAt:serverTimestamp()}).then(()=>{$("noticeTitle").value="";$("noticeText").value=""}).catch(e=>alert(e.message))};
+$("sendMessage").onclick=()=>{const to=$("messageTo").value,m=members.find(x=>x.uid===to),text=$("privateMessage").value.trim(),amount=$("amount").value;if(!m||(!text&&!amount))return alert("সদস্য নির্বাচন করে মেসেজ বা Amount দিন।");addDoc(collection(db,"messages"),{to,name:m.name,text,amount,createdAt:serverTimestamp()}).then(()=>{$("privateMessage").value="";$("amount").value=""}).catch(e=>alert(e.message))};
+$("searchInput").oninput=render;
+function draw(){let c=$("wheel"),ctx=c.getContext("2d"),cx=250,cy=250,r=225;ctx.clearRect(0,0,500,500);let list=members;if(!list.length)return;let sl=2*Math.PI/list.length;list.forEach((m,i)=>{let s=angle+i*sl-Math.PI/2,e=s+sl;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.stroke();ctx.save();ctx.translate(cx,cy);ctx.rotate(s+sl/2);ctx.textAlign="right";ctx.fillStyle="#fff";ctx.font="bold 16px system-ui";ctx.fillText(m.name.length>13?m.name.slice(0,12)+"…":m.name,r-16,5);ctx.font="12px system-ui";ctx.fillText(m.id,r-16,23);ctx.restore()});ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();ctx.fillStyle="#20366e";ctx.font="bold 15px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("AV",cx,cy)}
+$("spin").onclick=()=>{if(spinning||!members.length)return;spinning=true;$("spin").disabled=true;$("winner").textContent="Spinning…";let chosen=Math.floor(Math.random()*members.length),sl=2*Math.PI/members.length,target=((Math.PI*2)-(chosen*sl+sl/2))%(Math.PI*2),cur=((angle%(Math.PI*2))+Math.PI*2)%(Math.PI*2),delta=((target-cur)+Math.PI*2)%(Math.PI*2)+Math.PI*2*6,start=angle,begin=performance.now();function frame(now){let t=Math.min(1,(now-begin)/4200),ease=1-Math.pow(1-t,4);angle=start+delta*ease;draw();if(t<1)requestAnimationFrame(frame);else{angle=target;draw();let m=members[chosen];$("winner").textContent="Winner: "+m.name+" ("+m.id+")";spinning=false;$("spin").disabled=false;alert("বিজয়ী: "+m.name+". SMS এখনো সংযুক্ত নয়।")}}requestAnimationFrame(frame)};
+
+const intro=$("intro");function closeIntro(){if(intro)intro.classList.add("hide")}
+if(intro){intro.addEventListener("click",closeIntro);setTimeout(closeIntro,2800)}
+</script>
+</body></html>
